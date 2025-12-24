@@ -23,11 +23,11 @@ def main():
         screen.fill("black")
         player.draw(screen)
         pygame.display.flip()
-
+        player.update(dt)
         
         # End of each iteration of the game loop
         # It will pause the game loop until 1/60th of a second has passed.
         dt = clock.tick(60) / 1000  # convert from miliseconds to seconds.
-        print(dt)
+        # print(dt)
 if __name__ == "__main__":
     main()
