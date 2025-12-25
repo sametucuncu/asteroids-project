@@ -64,7 +64,7 @@ def main():
             for shot in shots:
                 if asteroid.collides_with(shot):
                     log_event("asteroid_shot")
-                    asteroid.kill()
+                    asteroid.split()
                     shot.kill()
                     # The kill() method is built-in feature of pygame sprites. 
                     # It removes the "killed" object from all of its groups so that the engine stops updating and drawing it.
