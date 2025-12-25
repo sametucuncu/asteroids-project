@@ -5,6 +5,7 @@ from logger import log_state, log_event
 from player import *
 from asteroid import *
 from asteroidfield import *
+from shot import *
 
 def main():
     print("Starting Asteroids with pygame version: {pygame.version.ver}")
@@ -21,6 +22,9 @@ def main():
     drawable = pygame.sprite.Group()
     # empty group for asteroids
     asteroids = pygame.sprite.Group()
+    # Groups for shots
+    shots = pygame.sprite.Group()
+    Shot.containers = (shots, drawable, updatable)
     
     # Adding asteroid class to the groups
     # This ensures that every instance of the Asteroid class is automatically added o these groups upon creation.
@@ -55,6 +59,10 @@ def main():
                 log_event("player_hit")
                 print("Game over!")
                 sys.exit()
+                
+                
+                
+                
         # End of each iteration of the game loop
         # It will pause the game loop until 1/60th of a second has passed.
         dt = clock.tick(60) / 1000  # convert from miliseconds to seconds.
