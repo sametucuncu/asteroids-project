@@ -21,3 +21,9 @@ class CircleShape(pygame.sprite.Sprite):
     def update(self, dt):
         # must override
         pass
+    
+    # Everything that collides will inherit from this Class, so this is a good place to add collision logic.
+    def collides_with(self, other):
+        # Get the distance between the two shapes
+        distance = self.position.distance_to(other.position)
+        return distance <= self.radius + other.radius

@@ -1,6 +1,7 @@
+import sys
 import pygame
 from constants import *
-from logger import log_state
+from logger import log_state, log_event
 from player import *
 from asteroid import *
 from asteroidfield import *
@@ -48,6 +49,12 @@ def main():
         # player.update(dt)     Use the new groups instead of the Player object directly. # Asteroid class objelerini de burda cagiricak. Cunku onlari da updatable grubuna dahil ettik.
         updatable.update(dt)
         
+        # Iterate over all the objects in asteroids group to check if any of them collide with the player object.
+        for asteroid in asteroids:
+            if asteroid.collides_with(player):
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
         # End of each iteration of the game loop
         # It will pause the game loop until 1/60th of a second has passed.
         dt = clock.tick(60) / 1000  # convert from miliseconds to seconds.
