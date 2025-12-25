@@ -2,6 +2,8 @@ import pygame
 from constants import *
 from logger import log_state
 from player import *
+from asteroid import *
+from asteroidfield import *
 
 def main():
     print("Starting Asteroids with pygame version: {pygame.version.ver}")
@@ -16,7 +18,14 @@ def main():
     # 2 empty groups called updatable and drawable
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    # empty group for asteroids
+    asteroids = pygame.sprite.Group()
     
+    # Adding asteroid class to the groups
+    # This ensures that every instance of the Asteroid class is automatically added o these groups upon creation.
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable)   # it is not drawable and it is not an asteroid itself.
+    asteroid_field = AsteroidField()
     # Adding Player class to the updatable and drawable groups before player object instance is created.
     Player.containers = (updatable, drawable)
     # We added All future instances of Player class to these containers (groups). 
@@ -31,12 +40,12 @@ def main():
                 return
             
         screen.fill("black")
-        # player.draw(screen)      Loop over all "drawables" and .draw() them individually.
+        # player.draw(screen)      Loop over all "drawables" and .draw() them individually. burda da Asteroid class objelerini de cagiricak.
         for drawable_object in drawable:
             drawable_object.draw(screen)
         pygame.display.flip()
         
-        # player.update(dt)     Use the new groups instead of the Player object directly.
+        # player.update(dt)     Use the new groups instead of the Player object directly. # Asteroid class objelerini de burda cagiricak. Cunku onlari da updatable grubuna dahil ettik.
         updatable.update(dt)
         
         # End of each iteration of the game loop
