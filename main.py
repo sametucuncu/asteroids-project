@@ -1,7 +1,7 @@
 import pygame
 from constants import *
 from logger import log_state
-from player import Player
+from player import *
 
 def main():
     print("Starting Asteroids with pygame version: {pygame.version.ver}")
@@ -12,6 +12,16 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
     
+    # Creating Groups and Adding our Object Classes to these containers so we can call and update them at the same time.
+    # 2 empty groups called updatable and drawable
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    
+    # Adding Player class to the updatable and drawable groups before player object instance is created.
+    Player.containers = (updatable, drawable)
+    # We added All future instances of Player class to these containers (groups). 
+    # Player instance'i olusturduk bu instance updatable ve drawable grouplari icinde oldugu icin
+    # player'i direkt olarak cagirmamiza gerek yok updatable ve drawable cagirarak player'i cagirmis olucaz ve diger class objelerimizi de ayni sekil de.
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)    
     
     while True:
@@ -21,9 +31,13 @@ def main():
                 return
             
         screen.fill("black")
-        player.draw(screen)
+        # player.draw(screen)      Loop over all "drawables" and .draw() them individually.
+        for drawable_object in drawable:
+            drawable_object.draw(screen)
         pygame.display.flip()
-        player.update(dt)
+        
+        # player.update(dt)     Use the new groups instead of the Player object directly.
+        updatable.update(dt)
         
         # End of each iteration of the game loop
         # It will pause the game loop until 1/60th of a second has passed.
